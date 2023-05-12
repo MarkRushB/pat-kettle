@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cat Slideshow</title>
+  <style>
+    #catContainer {
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+    }
+    
+    #catImage {
+      width: 100%;
+      height: auto;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    #button {
+      width: 120px;
+      height: 50px;
+      background-color: #333333;
+      color: #fff;
+      margin-top: 20px;
+      margin-bottom: 30px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 25px;
+      border: none;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    #progressBarContainer {
+      width: 240px;
+      height: 20px;
+      background-color: #eee;
+      margin-top: 20px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    #progressBar {
+      width: 0;
+      height: 100%;
+      background-color: #888;
+      transition: width 0.3s ease-in-out;
+    }
+
+    #cakeImage {
+      width: 200px;
+      height: 200px;
+      display: none;
+      margin-top: 20px;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        background-color: #f5f5f5;
+    }
+
+    /* 添加晃动动画效果 */
+    .shake-animation {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+    <div>
+        <img id="catImage" src="cat1.png" alt="Cat Image">
+    </div>
+
+    <button id="button">Pat!</button>
+
+    <div id="progressBarContainer">
+      <div id="progressBar"></div>
+    </div>
+    
+    
+  <script>
+    var catImage = document.getElementById('catImage');
+    var currentIndex = 0;
+    var catImages = ['cat1.png', 'cat2.png']; 
+    var cakeImage = document.getElementById('cakeImage');
+
+    var button = document.getElementById('button');
+    var progressBar = document.getElementById('progressBar');
+
+    var clickCount = 0;
+    var maxClicks = 26;
+
+    button.addEventListener('click', handleButtonClick, false);
+
+    function handleButtonClick() {
+      if (clickCount >= maxClicks) {
+        resetProgressBar();
+        clickCount = 0;
+        return;
+      }
+
+      currentIndex = (currentIndex + 1) % catImages.length;
+
+      catImage.classList.remove('shake-animation');
+
+      void catImage.offsetWidth;
+
+
+      catImage.classList.add('shake-animation');
+
+
+      setTimeout(function() {
+      catImage.classList.remove('shake-animation');
+      }, 500);
+      
+      catImage.src = catImages[currentIndex];
+
+      clickCount++;
+      updateProgressBar();
+    }
+
+
+    function updateProgressBar() {
+      var progress = (clickCount / maxClicks) * 100;
+      progressBar.style.width = progress + '%';
+    }
+
+    function resetProgressBar() {
+      progressBar.style.width = '0%';
+    }
+  </script>
+</body>
+</html>
